@@ -8,7 +8,10 @@ import requests
 
 
 def check_file_version(year,month,day,spacecraft,level,instrument):
-    base_url = f"https://tracers-portal.physics.uiowa.edu/{level.upper()}/TS{spacecraft}"
+    if instrument.lower() == 'magic':
+        base_url = f"https://tracers-portal.physics.uiowa.edu/MAGIC/TS{spacecraft}/{level.upper()}/"
+    else:
+        base_url = f"https://tracers-portal.physics.uiowa.edu/{level.upper()}/TS{spacecraft}"
     date_url = f'{base_url}/{year}/{month}/{day}'
 
     page = requests.get(date_url)

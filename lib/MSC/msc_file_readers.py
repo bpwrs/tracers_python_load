@@ -32,12 +32,6 @@ def read_msc_l2_files(files2load,start=None,end=None):
         # AC Magnetic Field (TRACERS Spacecraft Coordinates)
         bac_tscs = msc_cdf[f'{spacecraft}_l2_bac_tscs'] # n_times, 1024, 3
 
-        # # Spacecraft Location 
-        # location = msc_cdf[f'{spacecraft}_location'] # n_times, 3
-
-        # # Frequency Response Calibration
-        # cal_freq_resp = msc_cdf[f'{spacecraft}_cal_freq_response'] # ?
-
         # Flags
         flags = msc_cdf['flags']
         

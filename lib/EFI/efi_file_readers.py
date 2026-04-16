@@ -1,4 +1,3 @@
-import datetime as dt
 from spacepy import pycdf
 import bisect
 
@@ -7,21 +6,22 @@ def _read_efi_l2_eac(file, start, end):
     """
     Creates dict from cdf file usable for plotting for EAC data.
     """
+    sc = 'ts'+(file.split('ts')[1]).split('_')[0]
     cdf = pycdf.CDF(file)
     start_ind_ts = bisect.bisect_left(cdf['Epoch'], start)
     end_ind_ts = bisect.bisect_left(cdf['Epoch'], end)
 
-    start_ind_spec = bisect.bisect_left(cdf['ts2_l2_eac_packet_start'], start)
-    end_ind_spec = bisect.bisect_left(cdf['ts2_l2_eac_packet_start'], end)
+    start_ind_spec = bisect.bisect_left(cdf[f'{sc}_l2_eac_packet_start'], start)
+    end_ind_spec = bisect.bisect_left(cdf[f'{sc}_l2_eac_packet_start'], end)
 
     ddict = {}
     ddict['Epoch'] = cdf['Epoch'][start_ind_ts:end_ind_ts]
-    ddict['ts2_l2_eac'] = cdf['ts2_l2_eac'][start_ind_ts:end_ind_ts,:]
+    ddict[f'{sc}_l2_eac'] = cdf[f'{sc}_l2_eac'][start_ind_ts:end_ind_ts,:]
 
     ddict['Frequency'] = cdf['Frequency']
-    ddict['ts2_l2_eac_packet_start'] = cdf['ts2_l2_eac_packet_start'][start_ind_spec:end_ind_spec]
-    ddict['ts2_l2_eac_x_spec'] = cdf['ts2_l2_eac_x_spec'][start_ind_spec:end_ind_spec]
-    ddict['ts2_l2_eac_y_spec'] = cdf['ts2_l2_eac_y_spec'][start_ind_spec:end_ind_spec]
+    ddict[f'{sc}_l2_eac_packet_start'] = cdf[f'{sc}_l2_eac_packet_start'][start_ind_spec:end_ind_spec]
+    ddict[f'{sc}_l2_eac_x_spec'] = cdf[f'{sc}_l2_eac_x_spec'][start_ind_spec:end_ind_spec]
+    ddict[f'{sc}_l2_eac_y_spec'] = cdf[f'{sc}_l2_eac_y_spec'][start_ind_spec:end_ind_spec]
     
     return ddict
 
@@ -30,20 +30,21 @@ def _read_efi_l2_ehf(file, start, end):
     """
     Creates dict from cdf file usable for plotting for high frequency data.
     """    
+    sc = 'ts'+(file.split('ts')[1]).split('_')[0]
     cdf = pycdf.CDF(file)
     start_ind = bisect.bisect_left(cdf['Epoch'], start)
     end_ind = bisect.bisect_left(cdf['Epoch'], end)
 
-    start_ind_spec = bisect.bisect_left(cdf['ts2_l2_ehf_snapshot_start'], start)
-    end_ind_spec = bisect.bisect_left(cdf['ts2_l2_ehf_snapshot_start'], end)
+    start_ind_spec = bisect.bisect_left(cdf[f'{sc}_l2_ehf_snapshot_start'], start)
+    end_ind_spec = bisect.bisect_left(cdf[f'{sc}_l2_ehf_snapshot_start'], end)
 
     
     ddict = {}
     ddict['Epoch'] = cdf['Epoch'][start_ind:end_ind]
     ddict['Frequency'] = cdf['Frequency']
-    ddict['ts2_l2_ehf_snapshot_start'] = cdf['ts2_l2_ehf_snapshot_start'][start_ind_spec:end_ind_spec]
-    ddict['ts2_l2_hf'] = cdf['ts2_l2_hf'][start_ind:end_ind]
-    ddict['ts2_l2_hf_spec'] = cdf['ts2_l2_hf_spec'][start_ind_spec:end_ind_spec,:]
+    ddict[f'{sc}_l2_ehf_snapshot_start'] = cdf[f'{sc}_l2_ehf_snapshot_start'][start_ind_spec:end_ind_spec]
+    ddict[f'{sc}_l2_hf'] = cdf[f'{sc}_l2_hf'][start_ind:end_ind]
+    ddict[f'{sc}_l2_hf_spec'] = cdf[f'{sc}_l2_hf_spec'][start_ind_spec:end_ind_spec,:]
 
     return ddict  
 
@@ -52,12 +53,13 @@ def _read_efi_l2_vdc(file, start, end):
     """
     Creates dict from cdf file usable for plotting for DC field data.
     """
+    sc = 'ts'+(file.split('ts')[1]).split('_')[0]
     ddict = {}
     cdf = pycdf.CDF(file)
     start_ind = bisect.bisect_left(cdf['Epoch'], start)
     end_ind = bisect.bisect_left(cdf['Epoch'], end)
 
-    for k in ['Epoch', 'ts2_l2_vdc_xminus', 'ts2_l2_vdc_xplus', 'ts2_l2_vdc_yminus', 'ts2_l2_vdc_yplus']:
+    for k in ['Epoch', f'{sc}_l2_vdc_xminus', f'{sc}_l2_vdc_xplus', f'{sc}_l2_vdc_yminus', f'{sc}_l2_vdc_yplus']:
         ddict[k] = cdf[k][start_ind:end_ind]
     
     return ddict
@@ -67,6 +69,7 @@ def _read_efi_l2_hsk(file, start, end):
     """
     Creates dict from cdf file usable for plotting for housekeeping data.
     """
+    sc = 'ts'+(file.split('ts')[1]).split('_')[0]
     ddict = {}
     cdf = pycdf.CDF(file)
     start_ind = bisect.bisect_left(cdf['Epoch'], start)

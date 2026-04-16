@@ -1,8 +1,5 @@
 import matplotlib.pyplot as plt
 import datetime as dt
-import pandas as pd
-from scipy.interpolate import interp1d
-from ..general.ead_file_loading import *
 from ..general.misc_functions import time_res_f
 
 

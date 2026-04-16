@@ -1,15 +1,9 @@
 from bs4 import BeautifulSoup
-import cdflib
-import copy 
 import datetime as dt
-from glob import iglob
 import numpy as np
 import os 
-import pandas as pd 
 import requests
-from scipy.interpolate import interp1d
 import sys
-from tqdm import tqdm
 
 from .ace_file_readers import (read_ace_l2_files, read_ace_l3_files)
 from ..general.misc_functions import (determine_datetime_type, getTime, check_file_version)
