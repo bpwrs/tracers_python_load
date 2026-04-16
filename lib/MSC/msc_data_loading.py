@@ -74,7 +74,6 @@ def retrieve_msc_data(year,month,day,spacecraft,level,local_dir=None):
         file_url_path = date_url + '/' + day_file
         print(file_url_path)
         local_file_path = local_dir + '/' + day_file   
-        print(local_file_path)
         r = requests.get(file_url_path)
         with open(local_file_path,'wb') as df:
             df.write(r.content)            

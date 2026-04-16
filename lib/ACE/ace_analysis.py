@@ -133,9 +133,11 @@ def get_velocity_components(l3_data):
 
     
 
-def plot_epad_snapshot(l3_data,ax=None,units=None,cmap=None,n_levels=None):
+def plot_epad_snapshot(l3_data,ax=None,units=None,cmap=None,n_levels=None,time_avg=None):
     """
     This function utilizes ACE L3 data to plot a velocity contour snapshot.
+    The output is a result of summing over the entire time interval that the data cover.
+    
     Required inputs
     --------------
     l3_data (dictionary structure created from ACE_L3 class)
@@ -180,21 +182,27 @@ def plot_epad_snapshot(l3_data,ax=None,units=None,cmap=None,n_levels=None):
 
     v_perp, v_par = get_velocity_components(l3_data)
 
-    time_sum = np.nansum(particle_data,axis=0)
-    time_sum = np.ma.masked_where(time_sum <= 0, time_sum)
+    if time_avg is False or time_avg is None:
+        time_prof = np.nansum(particle_data,axis=0)
+        title='ACE Time-Summed Velocity Distribution'
+    if time_avg is True:
+        time_prof = np.nanmean(particle_data,axis=0)
+        title = 'ACE Time-Averaged Velocity Distribution'
     
-    lev_exp = np.linspace(np.floor(np.log10(time_sum.min())),
-                       np.ceil(np.log10(time_sum.max())),n_levels)
+    time_prof = np.ma.masked_where(time_prof <= 0, time_prof)    
+    lev_exp = np.linspace(np.floor(np.log10(time_prof.min())),
+                       np.ceil(np.log10(time_prof.max())),n_levels)
     levs = np.power(10, lev_exp)
     
     cbar_ticks = np.power(10, np.arange(lev_exp[0], lev_exp[-1]))
     
-    cm = ax.contourf(v_par, v_perp, time_sum, levs, norm=colors.LogNorm(), cmap=cmap)
+    cm = ax.contourf(v_par, v_perp, time_prof, levs, norm=colors.LogNorm(), cmap=cmap)
     ax.set_xlim([-6.3e7, 6.3e7])
     ax.set_ylim([0,6.3e7])
     ax.set_xlabel(r'$v_{\parallel}$ [m/s]')
     ax.set_ylabel(r'$v_{\perp}$ [m/s]')
     cbax = ax.inset_axes([1.03,0,0.08,1],transform=ax.transAxes)
+    ax.set_title(title)
     plt.colorbar(cm,cax=cbax,ticks=cbar_ticks,label=zlabel)
     return ax
     

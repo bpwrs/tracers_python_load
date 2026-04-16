@@ -3,6 +3,8 @@ This is a repository containing functions that pull and plot data for the TRACER
 
 The structure of this repository is relatively simple. Within the "lib" folder, there are subfolders for each instrument, as well as a "general" folder that contains miscellaneous routines.
 
+Questions? Email sarah-a-henderson@uiowa.edu
+
 ## Instruments
 ### ACE
 The Analyzer for Cusp Electrons (ACE) is an electrostatic analyzer with a field of view of 210 x 7 degrees that can measure electrons with energies spanning 20 - 13,500 eV [(Halekas et al., 2025)](https://link.springer.com/article/10.1007/s11214-025-01147-9). Within the region of interest (ROI), ACE operates at a cadence of 50 ms. In back orbit (BOR), this sampling is reduced to 6.4 s.
@@ -44,15 +46,8 @@ The Magnetic Search Coil (MSC) onboard each TRACERS spacecraft provides three ma
 ## Other 
 There are other functions within this repository that are useful for analyzing the above data products, as well as determining positional information about the spacecraft at a given time.
 
-Ephemeris and attitude data (EAD) can also be found on the TRACERS portal and are labelled as EAD files. These contain numerous parameters giving the attitude and position of the TRACERS spacecraft in different coordinate systems.
+Ephemeris and attitude data (EAD) can also be found on the TRACERS team portal and are labelled as EAD files. These contain numerous parameters giving the attitude and position of the TRACERS spacecraft in different coordinate systems.
 
 
 ## Notebook 
-There's a Jupyter notebook that outlines the basic calling routines for ACI, ACE, EFI, and EAD files. For plotting the data, all specific keywords are documented in each plotting routine file. Later entries will be added once libraries for MSC, MAG, and MAGIC are added.re documented in each plotting routine file.
-
-
-
-
-
-
-
+There's a Jupyter notebook that outlines the basic calling routines for ACI, ACE, MSC, EFI, and EAD files. For plotting the data, all specific keywords are documented in each plotting routine file. Later entries will be added once libraries for MAG and MAGIC are added.
